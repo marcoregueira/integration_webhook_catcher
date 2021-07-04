@@ -10,6 +10,7 @@ WORKDIR /build/src/WebHookCatcher
 RUN dotnet restore
 
 # copy everything else and build app
+WORKDIR /build
 COPY src/. ./src/
 WORKDIR /build/src/WebHookCatcher
 RUN dotnet publish -c Release -o /build/output
@@ -21,6 +22,6 @@ WORKDIR /app
 COPY --from=build /build/output /app
 run ls
 
-EXPOSE 80
+EXPOSE 80	
 
 ENTRYPOINT ["dotnet", "Ego.WebHookCatcher.dll"]
