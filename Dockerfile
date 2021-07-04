@@ -21,4 +21,6 @@ WORKDIR /app
 COPY --from=build /build/output /app
 run ls
 
+EXPOSE 80
+
 ENTRYPOINT ["dotnet", "Ego.WebHookCatcher.dll"]
