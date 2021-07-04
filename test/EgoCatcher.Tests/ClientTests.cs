@@ -13,17 +13,28 @@ using EgoCatcher.Tests.Utils;
 using Ego.WebHookCatcher.Contract;
 using System.Text;
 using Newtonsoft.Json;
+using Microsoft.Extensions.Configuration;
 
 namespace EgoCatcher.Tests
 {
     public class ClientTests : IClassFixture<WebApplicationFactory<Startup>>
     {
-
+        public TestConfiguration Config { get; }
         public HttpClient Client { get; }
 
         public ClientTests(WebApplicationFactory<Startup> fixture)
         {
-            Client = fixture.CreateClient();
+            Config = new TestConfiguration();
+            var remoteConfig = Config.Get<RemoteTest>();
+            if (!string.IsNullOrWhiteSpace(remoteConfig?.BaseAddress))
+            {
+                Client = new HttpClient();
+                Client.BaseAddress = new Uri(remoteConfig.BaseAddress);
+            }
+            else
+            {
+                Client = fixture.CreateClient();
+            }
         }
 
         [Fact]

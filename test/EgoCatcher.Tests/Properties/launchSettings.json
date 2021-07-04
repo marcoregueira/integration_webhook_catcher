@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "EgoCatcher.Tests": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "marco": "Value"
+      },
+      "remoteDebugEnabled": false
+    }
+  }
+}

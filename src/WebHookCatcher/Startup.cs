@@ -41,7 +41,7 @@ namespace Ego.WebHookCatcher
                 return next();
             });
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
 
             app.UseRouting();
 
