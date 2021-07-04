@@ -20,10 +20,21 @@ namespace EgoCatcher.Tests
     {
 
         public HttpClient Client { get; }
+        public TestConfiguration Config { get; }
 
         public CallbackTests(WebApplicationFactory<Startup> fixture)
         {
-            Client = fixture.CreateClient();
+            Config = new TestConfiguration();
+            var remoteConfig = Config.Get<RemoteTest>();
+            if (!string.IsNullOrWhiteSpace(remoteConfig?.BaseAddress))
+            {
+                Client = new HttpClient();
+                Client.BaseAddress = new Uri(remoteConfig.BaseAddress);
+            }
+            else
+            {
+                Client = fixture.CreateClient();
+            }
         }
 
         [Fact]
